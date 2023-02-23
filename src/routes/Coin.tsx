@@ -173,11 +173,11 @@ export default function Coin() {
 
   const { isLoading: infoLoading, data: infoData } = useQuery<InfoData>(
     ['info', coinId],
-    () => fetchCoinInfo(`${coinId}`)
+    () => fetchCoinInfo(coinId!)
   );
   const { isLoading: tickersLoading, data: tickersData } = useQuery<PriceData>(
     ['ticker', coinId],
-    () => fetchCoinTickers(`${coinId}`)
+    () => fetchCoinTickers(coinId!)
   );
 
   const loading = infoLoading || tickersLoading;
