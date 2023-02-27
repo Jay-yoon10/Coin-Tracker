@@ -4,10 +4,13 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import Router from './Router';
 import { FormControlLabel, FormGroup, Switch } from '@mui/material';
 import { darkTheme, lightTheme } from './theme';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { isDarkAtom } from './atom';
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;800&display=swap');
-html, body, div, span, applet, object, iframe,
+himport { isDarkAtom } from './atom';
+tml, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
@@ -71,16 +74,20 @@ a{
 `;
 
 function App() {
-  const [checked, setChecked] = useState(true);
-  const onChange = () => {
-    setChecked((prev) => !prev);
-  };
+  // const [checked, setChecked] = useState(true);
+  // const onChange = () => {
+  //   setChecked((prev) => !prev);
+  // };
+  const isDark = useRecoilValue(isDarkAtom);
+  const setDarkAtom = useSetRecoilState(isDarkAtom);
+  const toggleDarkAtom = () => setDarkAtom((prev) => !prev);
+
   return (
     <>
-      <ThemeProvider theme={checked ? darkTheme : lightTheme}>
+      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
         <FormGroup>
           <FormControlLabel
-            control={<Switch onChange={onChange} checked={checked} />}
+            control={<Switch checked={isDark} onChange={toggleDarkAtom} />}
             label='mode'
           />
         </FormGroup>
